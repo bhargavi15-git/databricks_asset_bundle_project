@@ -1,0 +1,17 @@
+resources:
+  jobs:
+    Logistics_etl_dsl_job_dev:
+      name: Logistics_etl_dsl_job_dev
+      tasks:
+        - task_key: cloud_to_bronzefile_loader
+          notebook_task:
+            notebook_path: /Workspace/databricks_assest_bundle/databricks_asset_bundle_project/my_dab_proj2/src/my_dab_proj2/sources_files_autoloder
+            source: WORKSPACE
+        - task_key: bronze_files_to_gold_table_load_dev
+          depends_on:
+            - task_key: cloud_to_bronzefile_loader
+          pipeline_task:
+            pipeline_id: f2776e5c-2c5a-4cb4-9f38-d593af733f52
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED

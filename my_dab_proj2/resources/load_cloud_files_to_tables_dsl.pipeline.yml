@@ -1,0 +1,17 @@
+resources:
+  pipelines:
+    load_cloud_files_to_tables_dsl_dev:
+      name: load_cloud_files_to_tables_dsl_dev
+      libraries:
+        - glob:
+            include: ../src/transformations/**
+      catalog: ${var.catalog}
+      channel: CURRENT
+      continuous: false
+      environment:
+        dependencies:
+          - word2number==1.1
+      photon: true
+      root_path: ../src
+      schema: ${var.schema}
+      serverless: true
