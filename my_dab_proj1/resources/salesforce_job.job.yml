@@ -1,0 +1,23 @@
+resources:
+  jobs:
+    Salesforce_ingestion_scd_implementation_prod:
+      name: Salesforce_ingestion_scd_implementation_prod
+      tasks:
+        - task_key: Salesforce_scd_ingestion_pipeline_prod
+          pipeline_task:
+            pipeline_id: b1eccf55-bf6b-4a38-a293-20c7d6a502d3
+            full_refresh: false
+        - task_key: SCD_load_to_salesforce_tables
+          depends_on:
+            - task_key: Salesforce_scd_ingestion_pipeline_prod
+          notebook_task:
+            notebook_path: /Workspace/databricks_assest_bundle/databricks_asset_bundle_project/my_dab_proj1/src/my_dab_proj1/salesforce_scd_implementation
+            source: WORKSPACE
+      queue:
+        enabled: true
+      parameters:
+        - name: catalog
+          default: ${var.catalog}
+        - name: schema
+          default: ${var.schema}
+      performance_target: PERFORMANCE_OPTIMIZED

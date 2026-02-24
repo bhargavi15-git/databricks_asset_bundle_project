@@ -1,0 +1,36 @@
+
+bundle:
+  name: my_dabproj1
+  uuid: 71bc893a-69e8-418f-b4f4-f03b11285c54
+
+include:
+  - resources/*.yml
+  - resources/*/*.yml
+
+
+variables:
+  catalog:
+    description: The catalog to use
+  schema:
+    description: The schema to use
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-aa7014a2-6101.cloud.databricks.com/
+    variables:
+      catalog: dab_proj_cat
+      schema: dab_proj_schema_dev
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-aa7014a2-6101.cloud.databricks.com/
+      root_path: /Workspace/Users/bhargavivenu15@gmail.com/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: dab_proj_cat
+      schema: dab_proj_schema_prod
+    permissions:
+      - user_name: bhargavivenu15@gmail.com
+        level: CAN_MANAGE

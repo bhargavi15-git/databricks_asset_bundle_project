@@ -1,0 +1,16 @@
+resources:
+  pipelines:
+    salesforce_scd_ingestion_pipeline_prod:
+      name: salesforce_scd_ingestion_pipeline_prod
+      catalog: ${var.catalog}
+      channel: CURRENT
+      ingestion_definition:
+        connection_name: salesforce_connection
+        objects:
+          - table:
+              destination_catalog: ${var.catalog}
+              destination_schema: ${var.schema}
+              source_schema: objects
+              source_table: Contact
+        source_type: SALESFORCE
+      schema: ${var.schema}
